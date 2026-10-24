@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,40 +9,33 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
+     * ตารางที่ใช้ในฐานข้อมูล
+     */
+    protected $table = 'users';
+
+    /**
+     * ตาราง users ของโปรเจกต์มี created_at
+     * แต่ไม่มี updated_at
+     */
+    const UPDATED_AT = null;
+
+    /**
+     * ฟิลด์ที่สามารถบันทึกข้อมูลได้
      */
     protected $fillable = [
-        'name',
-        'email',
+        'username',
         'password',
+        'fullname',
+        'role',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
+     * ฟิลด์ที่ไม่ต้องการให้แสดงออกมาโดยตรง
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
 }
